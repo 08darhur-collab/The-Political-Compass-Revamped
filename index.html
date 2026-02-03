@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Political Compass</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="#" onclick="goHome()" class="logo">
+                <span class="logo-icon">🧭</span>
+                <span>Political Compass</span>
+            </a>
+            
+            <div class="header-controls">
+                <button class="control-btn" id="theme-toggle">🌙</button>
+            </div>
+
+            <nav class="main-nav" id="main-nav">
+                <a href="#" onclick="scrollToSection('theory')">Theory</a>
+                <button onclick="startQuiz()" class="nav-cta">Take Test</button>
+            </nav>
+
+            <div class="quiz-meta hidden" id="quiz-meta">
+                <span id="q-section-tracker" class="tracker-text">Progress: 1/62</span>
+            </div>
+        </div>
+        <div class="progress-track hidden" id="progress-track">
+            <div class="progress-fill" id="progress-bar"></div>
+        </div>
+    </header>
+
+    <main>
+        <div id="view-landing" class="view-section fade-in">
+            <section class="hero">
+                <div class="container hero-grid">
+                    <div class="hero-text">
+                        
+                        <h1>Map the geography of your soul.</h1>
+                        <p class="hero-desc">
+                            Politics is not a line; it is a landscape. Find out where you truly stand on the compass.
+                        </p>
+                        
+                        <div class="hero-buttons">
+                            <button onclick="startQuiz()" class="btn btn-primary">Begin Analysis &rarr;</button>
+                        </div>
+
+                        <div class="stats-row">
+                            <div class="stat"><strong>16</strong><span>Figures</span></div>
+                            <div class="stat"><strong>21</strong><span>Archetypes</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-visual">
+                        <div class="compass-grid hero-compass">
+                            <div class="quadrant q1">Auth Left</div>
+                            <div class="quadrant q2">Auth Right</div>
+                            <div class="quadrant q3">Lib Left</div>
+                            <div class="quadrant q4">Lib Right</div>
+                            <div class="axis x-axis"></div>
+                            <div class="axis y-axis"></div>
+                            <div class="user-dot hero-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="theory" class="theory-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>The Four Corners</h2>
+                        <p>Understanding the political spectrum.</p>
+                    </div>
+                    <div class="theory-grid">
+                        <div class="theory-card t-auth">
+                            <h3>🛑 Authority</h3>
+                            <p>The state is the ultimate expression of organization. Order and duty come before individual desires.</p>
+                        </div>
+                        <div class="theory-card t-lib">
+                            <h3>🗽 Liberty</h3>
+                            <p>The individual is sovereign. The state is often seen as a necessary evil or something to be removed.</p>
+                        </div>
+                        <div class="theory-card t-left">
+                            <h3>🤝 Collectivism (Left)</h3>
+                            <p>Resources should be managed for the common good to ensure fairness and prevent exploitation.</p>
+                        </div>
+                        <div class="theory-card t-right">
+                            <h3>💰 Markets (Right)</h3>
+                            <p>Competition drives progress. Private property and free trade create prosperity.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="view-quiz" class="view-section hidden">
+            <div class="quiz-container">
+                <div class="card quiz-card" id="quiz-card">
+                    <div class="card-top-row">
+                        <span class="category-badge" id="q-category">SECTION</span>
+                    </div>
+                    
+                    <h2 id="q-text" class="question-text">...</h2>
+
+                    <div class="options-grid">
+                        <button class="option-btn strongly-agree" onclick="vote(1.0)">Strongly Agree</button>
+                        <button class="option-btn agree" onclick="vote(0.5)">Agree</button>
+                        <button class="option-btn disagree" onclick="vote(-0.5)">Disagree</button>
+                        <button class="option-btn strongly-disagree" onclick="vote(-1.0)">Strongly Disagree</button>
+                    </div>
+                    <div class="quiz-controls">
+                        <button class="btn-text" onclick="prevQuestion()" id="btn-back" disabled>← Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-results" class="view-section hidden">
+            <div class="quiz-container">
+                <div class="card result-card">
+                    <div class="result-header">
+                        <h2>Your Coordinates</h2>
+                        <p>Here is where you stand in the arena of ideas.</p>
+                    </div>
+
+                    <div class="result-grid">
+                        <div class="compass-section">
+                            <div class="compass-wrapper">
+                                <div class="compass-box">
+                                    <div class="quadrant q1">Auth Left</div>
+                                    <div class="quadrant q2">Auth Right</div>
+                                    <div class="quadrant q3">Lib Left</div>
+                                    <div class="quadrant q4">Lib Right</div>
+                                    <div class="axis x-axis"></div>
+                                    <div class="axis y-axis"></div>
+                                    <div id="result-dot" class="result-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stats-box">
+                            <div class="archetype-box">
+                                <h3>Political Identity:</h3>
+                                <h3 id="archetype-title" class="text-gradient">...</h3>
+                                <p id="archetype-desc">...</p>
+                            </div>
+
+                            <div class="history-box">
+                                <h3>Kindred Spirit:</h3>
+                                <img id="history-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Historical Figure" class="hidden">
+                                <h3 id="history-name" class="text-gradient">...</h3>
+                                <div class="quote-block">
+                                    " <span id="history-quote">...</span> "
+                                </div>
+                            </div>
+
+                            <div class="stats-row-dual">
+                                <div class="stat-card">
+                                    <label>Economy</label>
+                                    <div class="stat-value" id="score-econ">0.0</div>
+                                </div>
+                                <div class="stat-card">
+                                    <label>Social</label>
+                                    <div class="stat-value" id="score-soc">0.0</div>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-full" onclick="copyResult()" id="btn-share">Copy Result Link</button>
+                                <button class="btn btn-secondary btn-full" onclick="fullReset()">Restart Test</button>
+                            </div>
+                        </div>
+                    </div> </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-col">
+                <h4>Political Compass</h4>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
